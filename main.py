@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import math
+import time
 
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(static_image_mode=False,
@@ -13,13 +14,46 @@ face_mesh = mp_face_mesh.FaceMesh(static_image_mode=False,
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_style = mp.solutions.drawing_styles
 
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(
+    max_num_hands=2,
+    min_detection_confidence=0.6,
+    min_tracking_confidence=0.6
+)
+
+pinch_prev = False
+cooldown_until = 0
+pinch_text_until = 0
+active_idx = 0
+
 yaw_n = 7
 yaw_buffer = []
 pitch_n = 8
 pitch_buffer = []
 
-glasses_png = cv2.imread("asset/glasses4.png", cv2.IMREAD_UNCHANGED)
-png_h, png_w = glasses_png.shape[:2]
+pictures = [
+    "assets/glasses.png",
+    "assets/glasses1.png",
+    "assets/glasses2.png",
+    "assets/glasses3.png",
+    "assets/glasses4.png",
+    "assets/glasses5.png",
+    "assets/glasses6.png",
+    "assets/glasses7.png",
+    "assets/glasses8.png",
+    "assets/glasses9.png",
+]
+
+# load awal
+picture_png = cv2.imread(pictures[active_idx], cv2.IMREAD_UNCHANGED)
+png_h, png_w = picture_png.shape[:2]
+
+def switch_png():
+    global active_idx, picture_png, png_h, png_w
+
+    active_idx = (active_idx + 1) % len(pictures)
+    picture_png = cv2.imread(pictures[active_idx], cv2.IMREAD_UNCHANGED)
+    png_h, png_w = picture_png.shape[:2]
 
 def place_overlay(frame, overlay_rgba, x1, y1):
     H, W = frame.shape[:2]        # ambil ukuran gambar (tinggi, lebar, channel)
@@ -240,13 +274,51 @@ def apply_rotate_pitch(overlay, pitch, strength=0.35):
     return warped, dy
 
 def process_frame(frame):
-    global yaw_buffer, yaw_n
+    global yaw_buffer, yaw_n, pinch_prev, cooldown_until, pinch_text_until
     height, width, _ = frame.shape
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    result = face_mesh.process(rgb)
+    result_face = face_mesh.process(rgb)
+    result_hand = hands.process(rgb)
     
-    if result.multi_face_landmarks:
-        for facial_landmarks in result.multi_face_landmarks:
+    if result_hand.multi_hand_landmarks:
+        hand_landmarks = result_hand.multi_hand_landmarks[0]
+        # mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+        lm = hand_landmarks.landmark
+        now = time.time()
+        
+        thumb = lm[4]
+        index = lm[8]
+        
+        thumb_px = int(thumb.x * width)
+        thumb_py = int(thumb.y * height)
+        
+        index_px = int(index.x * width)
+        index_py = int(index.y * height)
+        
+        cv2.circle(frame, (thumb_px, thumb_py), 2, (255,255,255), -1)
+        cv2.circle(frame, (index_px, index_py), 2, (255,255,255), -1)
+        
+        # dist
+        dx = thumb.x - index.x
+        dy = thumb.y - index.y
+        dist = math.sqrt(dx*dx + dy*dy)
+        
+        pinch = dist < 0.06
+        
+        if pinch and not pinch_prev and now > cooldown_until:
+            switch_png()
+            pinch_text_until = now + 0.3
+            cooldown_until = now + 0.7
+            
+        # if now < pinch_text_until:
+        #     cv2.putText(frame, "PINCH", (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 1)
+
+        pinch_prev = pinch        
+        # cv2.putText(frame, f"switch ke: {pictures[active_idx]}", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
+
+    if result_face.multi_face_landmarks:
+        for facial_landmarks in result_face.multi_face_landmarks:
             pts = get_points(facial_landmarks, width, height)
             (nose_x, nose_y) = pts["nose"]
             (leftc_x, leftc_y) = pts["cheekL"]
@@ -261,7 +333,7 @@ def process_frame(frame):
             
             pitch = compute_pitch(pts)
             
-            overlay = cv2.resize(glasses_png, (glasses_w, glasses_h), interpolation=cv2.INTER_AREA) 
+            overlay = cv2.resize(picture_png, (glasses_w, glasses_h), interpolation=cv2.INTER_AREA) 
             
             yaw_warp = math.tanh(yaw_use * 1.2)
             
@@ -276,24 +348,17 @@ def process_frame(frame):
             y1 = cy - rh // 2
             place_overlay(frame, overlay, x1, y1)
 
-
             # cv2.circle(frame, (nose_x, nose_y), 4, (0,255,255), -1)
             # cv2.circle(frame, (leftc_x, leftc_y), 4, (255,0,0), -1)
             # cv2.circle(frame, (rightc_x, rightc_y), 4, (0,0,255), -1)
             # cv2.circle(frame, (chin_x, chin_y), 4, (0,0,255), -1)
             
             # cv2.line(frame, (leftc_x, leftc_y), (rightc_x, rightc_y), (255,255,0), 1)
-            # cv2.line(frame, (nose_x, nose_y), (rightc_x, rightc_y), (255,255,0), 1)
-            # cv2.line(frame, (leftc_x, leftc_y), (nose_x, nose_y), (255,255,0), 1)
 
-            cv2.putText(frame, f"pitch raw: {pitch}", (200, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
-            # cv2.putText(frame, f"den: {}", (40, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
-
-            cv2.putText(frame, f"dx : {dx:.2f}", (40, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
-            cv2.putText(frame, f"dy : {dy:.2f}", (40, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
+            # cv2.putText(frame, f"pitch raw: {pitch}", (200, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 1)
             
             # cv2.rectangle(frame, (x1, y1), (x1 + rw, y1 + rh), (0, 255, 0), 2)
-    
+            
     return frame
 
 def main():
