@@ -29,13 +29,13 @@ Built with browser-based machine learning, this project detects facial landmarks
 
 Coming soon... (will be deployed on Netlify)
 
----
+<!-- ---
 
 ## 📸 Preview
 
 > Add screenshot here later (recommended for better presentation)
 
----
+--- -->
 
 ## 📂 Project Structure
 
@@ -125,9 +125,3 @@ Planned improvements:
 ## 🙌 Author
 
 Made with curiosity and experimentation in computer vision & web ML.
-
----
-
-## ⭐ Support
-
-If you like this project, feel free to give it a star ⭐ on GitHub!
