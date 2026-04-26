@@ -27,7 +27,7 @@ Built with browser-based machine learning, this project detects facial landmarks
 
 ## 🚀 Live Demo
 
-Coming soon... (will be deployed on Netlify)
+https://looqi.netlify.app/
 
 <!-- ---
 
