@@ -1,0 +1,21 @@
+const video = document.getElementById('video');
+let canvas = document.getElementById('canvas');
+
+canvas.style.background = ""
+
+
+function startup() {
+
+    navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+            width: 640,
+            height: 484
+        }
+    }).then(stream => {
+        video.srcObject = stream;
+    }).catch(console.error)
+
+}
+
+window.addEventListener('load', startup, false)

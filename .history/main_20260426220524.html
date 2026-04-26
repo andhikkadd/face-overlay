@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Glasses</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+  <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+</head>
+<body>
+
+  <main class="page">
+
+    <header class="topbar">
+      <div>
+        <h1>Virtual Glasses</h1>
+        <p>Pick a style, pose, and capture your look.</p>
+      </div>
+
+      <button class="capture-top" onclick="capturePhoto()">
+        Capture
+      </button>
+    </header>
+
+    <section class="studio">
+
+  <div class="left">
+    <div class="camera-frame">
+      <div id="viewer"></div>
+    </div>
+
+    <button class="capture-btn" onclick="capturePhoto()">
+      Capture Photo
+    </button>
+  </div>
+
+  <aside class="style-panel">
+
+      <div class="viewer-wrap">
+        <div class="camera-frame">
+          <div id="viewer"></div>
+        </div>
+
+        <button class="capture-mobile" onclick="capturePhoto()">
+          Capture Photo
+        </button>
+      </div>
+
+      <aside class="style-panel">
+        <div class="style-title">
+          <span>Styles</span>
+          <small>4 frames</small>
+        </div>
+
+        <div class="glasses-list">
+          <button class="glass-item active" onclick="changeGlasses('assets/glasses.png', this)">
+            <img src="assets/glasses.png" alt="Glasses 1">
+          </button>
+
+          <button class="glass-item" onclick="changeGlasses('assets/glasses1.png', this)">
+            <img src="assets/glasses1.png" alt="Glasses 2">
+          </button>
+
+          <button class="glass-item" onclick="changeGlasses('assets/glasses2.png', this)">
+            <img src="assets/glasses2.png" alt="Glasses 3">
+          </button>
+
+          <button class="glass-item" onclick="changeGlasses('assets/glasses3.png', this)">
+            <img src="assets/glasses3.png" alt="Glasses 4">
+          </button>
+        </div>
+      </aside>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

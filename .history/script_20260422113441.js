@@ -1,0 +1,5 @@
+function startup() {
+
+}
+
+window.addEventListener

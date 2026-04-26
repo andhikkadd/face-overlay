@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Glasses Try-On</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+</head>
+<body>
+
+  <main class="app">
+    <section class="hero">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">AI Vision Experience</p>
+          <h1>Virtual Glasses Try-On</h1>
+          <p class="subtitle">
+            Coba berbagai model kacamata secara real-time langsung dari kamera.
+          </p>
+        </div>
+
+        <div class="camera-pill">
+          <span></span>
+          Camera Active
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="frame-glow"></div>
+        <div id="viewer" class="viewer"></div>
+
+        <div class="floating-info">
+          <p>Face Tracking</p>
+          <strong>Live</strong>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-header">
+        <p class="eyebrow">Customize</p>
+        <h2>Choose your frame</h2>
+        <p>Pilih style kacamata, lalu ambil foto hasil try-on kamu.</p>
+      </div>
+
+      <div class="items">
+        <button class="glass-card active" onclick="changeGlasses('assets/glasses1.png', this)">
+          <img src="assets/glasses1.png" alt="Classic Glasses">
+          <div>
+            <strong>Classic</strong>
+            <span>Simple everyday look</span>
+          </div>
+        </button>
+
+        <button class="glass-card" onclick="changeGlasses('assets/glasses2.png', this)">
+          <img src="assets/glasses2.png" alt="Modern Glasses">
+          <div>
+            <strong>Modern</strong>
+            <span>Clean futuristic frame</span>
+          </div>
+        </button>
+
+        <button class="glass-card" onclick="changeGlasses('assets/glasses3.png', this)">
+          <img src="assets/glasses3.png" alt="Bold Glasses">
+          <div>
+            <strong>Bold</strong>
+            <span>Strong statement style</span>
+          </div>
+        </button>
+      </div>
+
+      <button class="capture-btn" onclick="capturePhoto()">
+        Capture & Download
+      </button>
+
+      <p class="hint">
+        Tips: arahkan wajah ke tengah frame agar kacamata lebih stabil.
+      </p>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

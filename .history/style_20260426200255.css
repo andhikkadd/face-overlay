@@ -1,0 +1,45 @@
+<body>
+
+<div class="container">
+
+  <h1 class="title">Virtual Try-On</h1>
+
+  <div class="main">
+
+    <!-- VIDEO -->
+    <div class="viewer-box">
+      <div class="viewer-inner">
+        <div id="viewer"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="panel">
+      <div class="glasses-grid">
+
+        <div class="item active" onclick="changeGlasses('assets/glasses1.png', this)">
+          <img src="assets/glasses1.png">
+        </div>
+
+        <div class="item" onclick="changeGlasses('assets/glasses2.png', this)">
+          <img src="assets/glasses2.png">
+        </div>
+
+        <div class="item" onclick="changeGlasses('assets/glasses3.png', this)">
+          <img src="assets/glasses3.png">
+        </div>
+
+        <div class="item">
+          <img src="assets/glasses4.png">
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <button class="capture" onclick="capturePhoto()">Take Photo</button>
+
+</div>
+
+</body>

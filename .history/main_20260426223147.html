@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frame Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+  <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+</head>
+
+<body>
+
+<main class="page">
+
+  <section class="layout">
+
+    <div class="left-area">
+
+      <header class="hero">
+        <p class="eyebrow">Photo Frame Studio</p>
+        <h2>Find Your Perfect Frame</h2>
+        <p class="subtitle">Pick a style, face the camera, and save your look.</p>
+      </header>
+
+      <div class="photo-shell">
+        <div class="photo-top">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="camera-frame">
+          <div id="viewer"></div>
+        </div>
+
+        <div class="photo-bottom">
+          <button class="capture-btn" onclick="capturePhoto()">
+            Capture Photo
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="style-panel">
+
+      <div class="style-head">
+        <div>
+          <h2>Frame Styles</h2>
+          <p>Choose your look</p>
+        </div>
+      </div>
+
+      <div class="glasses-list">
+
+        <button class="glass-item active" onclick="changeGlasses('assets/glasses.png', this)">
+          <img src="assets/glasses.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses1.png', this)">
+          <img src="assets/glasses1.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses2.png', this)">
+          <img src="assets/glasses2.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses3.png', this)">
+          <img src="assets/glasses3.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses4.png', this)">
+          <img src="assets/glasses4.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses5.png', this)">
+          <img src="assets/glasses5.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses6.png', this)">
+          <img src="assets/glasses6.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses7.png', this)">
+          <img src="assets/glasses7.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses8.png', this)">
+          <img src="assets/glasses8.png" alt="">
+        </button>
+
+        <button class="glass-item" onclick="changeGlasses('assets/glasses9.png', this)">
+          <img src="assets/glasses9.png" alt="">
+        </button>
+
+      </div>
+
+    </aside>
+
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Glasses Try-On</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+</head>
+<body>
+
+<div class="app">
+<script src="script.js"></script>
+
+  <div class="left">
+    <div class="frame">
+      <div class="frame-inner">
+        <div class="placeholder">Loading Camera...</div>
+        <div id="viewer"></div>
+    </div>
+    </div>
+
+    <button class="capture" onclick="capturePhoto()">Capture</button>
+  </div>
+
+  <div class="right">
+    <div class="list">
+
+      <div class="item active" onclick="changeGlasses('assets/glasses1.png', this)">
+        <img src="assets/glasses1.png">
+      </div>
+
+      <div class="item" onclick="changeGlasses('assets/glasses2.png', this)">
+        <img src="assets/glasses2.png">
+      </div>
+
+      <div class="item" onclick="changeGlasses('assets/glasses3.png', this)">
+        <img src="assets/glasses3.png">
+      </div>
+
+      <!-- bebas tambah banyak -->
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+let canvas;
+
+function setup() {
+  const viewer = document.getElementById("viewer");
+
+  canvas = createCanvas(viewer.offsetWidth, viewer.offsetHeight);
+  canvas.parent("viewer");
+
+  video = createCapture(VIDEO);
+  video.size(width, height);
+  video.hide();
+}
