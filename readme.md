@@ -1,6 +1,6 @@
-# 👓 Frame Studio
+# 👓 Looqi Studio
 
-**Frame Studio** is an interactive web-based application that allows users to try on virtual glasses in real-time using their webcam.
+**Looqi Studio** is an interactive web-based application that allows users to try on virtual glasses in real-time using their webcam.
 
 Built with browser-based machine learning, this project detects facial landmarks and dynamically adjusts glasses overlays based on head movement (yaw, pitch, and rotation).
 
